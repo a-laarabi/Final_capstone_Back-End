@@ -1,10 +1,7 @@
 class Reservation < ApplicationRecord
+  belongs_to :user
+  belongs_to :car
 
-    belongs_to :user , foreign_key: 'user_id' , class_name: 'User'
-    belongs_to :car , foreign_key: 'car_id'
-    
-    validates :city , :date  , presence: :true
- 
-    
-    
+  validates :city, :reservation_date, :car_id, :user_id, presence: true
+  # validates :car_id, uniqueness: { scope: :user_id }
 end

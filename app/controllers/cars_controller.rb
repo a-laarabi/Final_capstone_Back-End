@@ -1,11 +1,7 @@
 class CarsController < ApplicationController
   def index
     @cars = Car.includes(:user).all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @cars }
-    end
+    render json: { code: 200, cars: @cars }
   end
 
   def show
@@ -47,7 +43,6 @@ class CarsController < ApplicationController
       format.html
       format.json { render json: @car }
     end
-
   end
 
   def destroy
@@ -72,8 +67,7 @@ class CarsController < ApplicationController
         format.json { render json: @car.errors, status: :unprocessable_entity }
       end
     end
-
-  end 
+  end
 
   private
 
@@ -81,4 +75,3 @@ class CarsController < ApplicationController
     params.require(:car).permit(:model, :brand, :user_id, :year_realeased)
   end
 end
-
