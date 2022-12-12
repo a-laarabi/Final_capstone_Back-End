@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
   # test validations
   describe 'validations' do
     it 'it validates the presence of a name' do
@@ -31,4 +32,5 @@ RSpec.describe User, type: :model do
       expect(user.macro).to eq(:has_many)
     end
   end
+
 end

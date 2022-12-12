@@ -26,4 +26,5 @@ RSpec.describe Reservation, type: :model do
       expect(reservation.macro).to eq(:belongs_to)
     end
   end
+
 end
