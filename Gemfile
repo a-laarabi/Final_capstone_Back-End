@@ -5,6 +5,8 @@ ruby '3.1.2'
 gem 'rubocop', '>= 1.0', '< 2.0'
 
 gem 'devise'
+gem 'devise-jwt', '~> 0.10.0'
+gem 'rack-cors'
 gem 'rails', '~> 7.0.4'
 gem 'sprockets-rails'
 
@@ -27,7 +29,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
 
