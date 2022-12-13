@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Car, type: :model do
-
   # test validations
 
   describe 'validations' do
@@ -19,5 +18,4 @@ RSpec.describe Car, type: :model do
       expect(car.macro).to eq(:belongs_to)
     end
   end
-
 end
