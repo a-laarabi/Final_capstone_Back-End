@@ -67,8 +67,6 @@ test:
 
 
   #password: shaqayq2020
-
-  #password: shaqayq2020
  
   password: mint
   port: 5432
