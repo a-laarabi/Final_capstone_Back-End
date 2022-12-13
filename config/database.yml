@@ -62,6 +62,11 @@ test:
   database: cars_bnb_backend_test
   username: postgres
   # password: abodyalex1
+
+  # port: 54321
+
+  #password: shaqayq2020
+ 
   password: mint
   port: 5432
 
