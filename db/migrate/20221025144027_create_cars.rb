@@ -3,9 +3,7 @@ class CreateCars < ActiveRecord::Migration[7.0]
     create_table :cars do |t|
       t.string :model
       t.string :brand
-      t.string :year
-      t.datetime :year_realeased
-      t.integer :user_id
+      t.datetime :year_released
 
       t.timestamps
     end

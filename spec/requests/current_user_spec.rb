@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
-  describe 'GET /splash' do
+RSpec.describe 'CurrentUsers', type: :request do
+  describe 'GET /index' do
     it 'returns http success' do
-      get '/users/splash'
+      get '/current_user/index'
       expect(response).to have_http_status(:success)
     end
   end
