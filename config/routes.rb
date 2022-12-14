@@ -1,13 +1,12 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
-  get 'current_user/index'
-  devise_for :users,
-  controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
-  resources :reservations
-  resources :cars
-  get '/current_user', to: 'current_user#index'
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
+  post :auth, to: 'authentication#create'
+  post :register, to: 'users#create'
+  put :toggle_admin, to: 'users#toggle_admin'
+
+  resources :users, only: [:destroy, :update, :index]
+  resources :cars, except: [:new, :edit, :show]
+  resources :reservations, only: [:create, :destroy, :update]
+
 end

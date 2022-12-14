@@ -1,43 +1,45 @@
 class ReservationsController < ApplicationController
-  def index
-    if current_user
-      @reservations = current_user.reservations.includes(:car)
-      render json: { code: 200,
-                     reservations: @reservations }, status: :ok
+  def create
+    @reservation = Reservation.new(reservation_params)
+    @reservation.user = @current_user
+    if @reservation.save
+      render json: @reservation
     else
-      render json: { code: 401,
-                     message: 'You need to sign in or sign up before continuing.' }, status: :unauthorized
+      render json: { error: 'Something went wrong' }, status: :bad_request
     end
   end
 
-  def create
-    @reservation = current_user.reservations.new(reservation_params)
-    if @reservation.save
-      render json: { code: 200,
-                     reservation: @reservation,
-                     message: 'Reservation created' }, status: :ok
+  def update
+    unless @current_user == Reservation.find(params[:id]).user
+      return render json: { error: 'You are not allowed' },
+                    status: :unauthorized
+    end
+
+    @reservation = Reservation.find(params[:id])
+    if @reservation.update(reservation_params)
+      render json: @reservation
     else
-      render json: { code: 400,
-                     message: 'Reservation not created',
-                     error: @reservation.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: 'Something went wrong' }, status: :bad_request
     end
   end
 
   def destroy
-    @reservation = current_user.reservations.find(params[:id])
+    unless @current_user == Reservation.find(params[:id]).user
+      return render json: { error: 'You are not allowed' },
+                    status: :unauthorized
+    end
+
+    @reservation = Reservation.find(params[:id])
     if @reservation.destroy
-      render json: { code: 200, reservation: @reservation,
-                     message: 'Reservation deleted' }, status: :ok
+      render json: { id: @reservation.id, msg: 'Reservation deleted successfully' }
     else
-      render json: { code: 400, reservation: @reservation,
-                     message: 'Reservation not deleted',
-                     error: @reservation.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: 'Something went wrong' }, status: :bad_request
     end
   end
 
   private
 
   def reservation_params
-    params.require(:reservation).permit(:car_id, :user_id, :reservation_date, :city)
+    params.require(:reservation).permit(:reservation_date, :due_date, :car_id)
   end
 end
