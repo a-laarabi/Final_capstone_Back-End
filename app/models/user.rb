@@ -1,12 +1,16 @@
 class User < ApplicationRecord
-  include Devise::JWT::RevocationStrategies::JTIMatcher
-  has_many :reservations, foreign_key: :user_id, dependent: :delete_all
-  # whats dependent: :destroy?
-  # it means that if the user is deleted, the cars will be deleted as well
+  has_secure_password
+  has_one_attached :avatar
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: self
+  has_many :reservations, dependent: :destroy
+  has_many :cars, through: :reservations
 
   validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :date_of_birth, presence: true
+
+  def admin?
+    admin
+  end
 end

@@ -1,7 +1,9 @@
 class Reservation < ApplicationRecord
-  belongs_to :user, optional: true
-  belongs_to :car, optional: true
+  belongs_to :user
+  belongs_to :car
 
-  validates :city, :reservation_date, presence: true
-  validates :car_id, uniqueness: { scope: :reservation_date }
+  validates :car_id, presence: true
+  validates :user_id, presence: true
+  validates :reservation_date, presence: true
+  validates :due_date, presence: true
 end
